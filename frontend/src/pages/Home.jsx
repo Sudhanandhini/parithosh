@@ -467,11 +467,12 @@ const Home = () => {
               </h2>
 
               <p className="text-gray-600 mb-4 leading-relaxed">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor.
+                Parithosh Souharda Credit Co-operative Ltd is a member-centric financial co-operative institution established with the objective of promoting financial inclusion, savings culture, and self-reliance among its members. Registered under the Karnataka Souharda Sahakari Act, the society functions on the principles of co-operation, transparency, trust, and mutual growth.
+
               </p>
 
               <p className="text-gray-600 mb-8 leading-relaxed">
-                Proin ullamcorper pretium orci. Donec nec scelerisque leo. Nam massa dolor, imperdiet nec consequat a, congue id sem. Maecenas malesuada faucibus finibus. Donec vitae libero porttitor.
+                We provide reliable and accessible financial services such as savings schemes, group loans, personal loans, and business loans to meet the diverse needs of our members. Our focus is on empowering individuals, self-help groups, small entrepreneurs, and families by offering timely credit support at reasonable terms.
               </p>
 
               {/* Features List */}

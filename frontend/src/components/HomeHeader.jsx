@@ -1,4 +1,4 @@
-import { useState ,  useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaBars, FaTimes, FaFacebookF, FaTwitter, FaGooglePlusG, FaInstagram, FaEnvelope, FaPhone, FaSearch, FaChevronDown } from 'react-icons/fa';
@@ -10,14 +10,14 @@ const HomeHeader = () => {
 
   const [isScrolled, setIsScrolled] = useState(false);
 
-useEffect(() => {
-  const handleScroll = () => {
-    setIsScrolled(window.scrollY > 50);
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
 
-  window.addEventListener('scroll', handleScroll);
-  return () => window.removeEventListener('scroll', handleScroll);
-}, []);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
 
   const [isOpen, setIsOpen] = useState(false);
@@ -33,15 +33,40 @@ useEffect(() => {
 
   const isActive = (path) => location.pathname === path;
 
+  const text = "Your Trusted Partner In  Banking Success";
+
+  const container = {
+    hidden: { opacity: 1 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05, // delay between letters
+      },
+    },
+  };
+
+  const child = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        ease: "easeOut",
+        duration: 0.4,
+      },
+    },
+  };
+
+
   return (
-    <div className="relative min-h-screen overflow-hidden"
+    <div className="relative min-h-screen "
       style={{ backgroundImage: `url(${back})`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundSize: 'cover' }}>
       {/* Top Bar */}
-      <div className=" py-2">
+      <div className=" py-2 ">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center text-sm">
             {/* Social Icons */}
-            <div className="flex gap-2">
+            {/* <div className="flex gap-2">
               {[FaFacebookF, FaTwitter, FaGooglePlusG, FaInstagram].map((Icon, index) => (
                 <a
                   key={index}
@@ -51,30 +76,35 @@ useEffect(() => {
                   <Icon className="text-sm" />
                 </a>
               ))}
-            </div>
+            </div> */}
 
             {/* Contact Info */}
             <div className="hidden md:flex items-center gap-6 text-white">
-              <a href="mailto:info@psccl.com" className="flex items-center gap-2 hover:text-gray-200 transition-colors">
+              <a href="mailto:info@psccl.com" className="flex items-center gap-2 hover:text-gray-200 transition-colors text-xs">
                 <FaEnvelope className="text-sm" />
                 <span>info@psccl.com</span>
               </a>
-              <a href="tel:+919071115946" className="flex items-center gap-2 hover:text-gray-200 transition-colors">
+              <a href="tel:+919071115946" className="flex items-center gap-2 hover:text-gray-200 transition-colors text-xs">
                 <FaPhone className="text-sm" />
                 <span>+91 9071115946</span>
               </a>
             </div>
+            <div className="text-xs text-white">
+              #319, 1st Floor, 59th Cross, 3rd Block Rajajinagar, Bengaluru 560010
+            </div>
+
+
           </div>
         </div>
       </div>
 
-      
+
 
       {/* Main Header */}
-     <header
-  className={`sticky top-0 z-50 transition-all duration-300 
+      <header
+        className={`sticky top-0 z-50 transition-all duration-300 
   ${isScrolled ? 'bg-[#991b1b] shadow-lg' : 'bg-transparent'}`}
->
+      >
 
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between py-4">
@@ -116,7 +146,7 @@ useEffect(() => {
               </button> */}
               <Link
                 to="/contact"
-                className="bg-white text-[#4a6741] px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-gray-100 transition-all duration-300 flex items-center gap-2"
+                className="bg-white text-[#701a1a] px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-gray-100 transition-all duration-300 flex items-center gap-2"
               >
                 GET STARTED
                 <span>→</span>
@@ -182,13 +212,42 @@ useEffect(() => {
             </motion.p>
 
             <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
+              variants={{
+                hidden: { opacity: 1 },
+                visible: {
+                  opacity: 1,
+                  transition: { staggerChildren: 0.04 },
+                },
+              }}
+              initial="hidden"
+              animate="visible"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight flex flex-wrap"
             >
-              Your Trusted Partner In Banking SUCc
+              {text.split(" ").map((word, wordIndex) => (
+                <span
+                  key={wordIndex}
+                  className="whitespace-nowrap mr-3 flex"
+                >
+                  {word.split("").map((char, charIndex) => (
+                    <motion.span
+                      key={charIndex}
+                      variants={{
+                        hidden: { opacity: 0, y: 20 },
+                        visible: {
+                          opacity: 1,
+                          y: 0,
+                          transition: { duration: 0.4, ease: "easeOut" },
+                        },
+                      }}
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                </span>
+              ))}
             </motion.h1>
+
+
 
             <motion.p
               initial={{ opacity: 0, y: 30 }}

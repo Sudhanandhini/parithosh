@@ -43,7 +43,7 @@ const Header = () => {
             </a>
           </div>
           <div className="text-xs">
-            A Society registered under Karnataka Souharda Sahakari Act 1997
+            #319, 1st Floor, 59th Cross, 3rd Block Rajajinagar, Bengaluru 560010
           </div>
         </div>
       </div>
