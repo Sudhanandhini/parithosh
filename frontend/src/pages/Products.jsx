@@ -1,7 +1,66 @@
-import { motion } from 'framer-motion';
+
+import { useState, useEffect, useRef } from 'react';
 import { FaPiggyBank, FaCreditCard, FaMoneyBillWave, FaChartLine, FaUserTie, FaHandshake, FaPercentage, FaClock, FaShieldAlt, FaCheckCircle, FaArrowRight, FaPhone, FaStar } from 'react-icons/fa';
+import { motion, useInView } from 'framer-motion';
+import { Link } from 'react-router-dom';
+
+
+
+
 
 const Products = () => {
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+    const statsRef = useRef(null);
+    const statsInView = useInView(statsRef, { once: true, amount: 0.5 });
+  
+    const fadeInUp = {
+      initial: { opacity: 0, y: 30 },
+      animate: { opacity: 1, y: 0 },
+      transition: { duration: 0.6 }
+    };
+
+  const services = [
+    {
+      icon: <FaPiggyBank className="text-5xl text-red-600" />,
+      title: "Savings Account",
+      description: "Secure savings account with competitive interest rates for your financial growth.",
+      color: "#dc2626"
+    },
+    {
+      icon: <FaCreditCard className="text-5xl text-red-600" />,
+      title: "Current Account",
+      description: "Easy access to your funds with our flexible current account solutions.",
+      color: "#b91c1c"
+    },
+    {
+      icon: <FaMoneyBillWave className="text-5xl text-red-600" />,
+      title: "Fixed Deposit",
+      description: "Fixed deposits with attractive interest rates and flexible tenure options.",
+      color: "#991b1b"
+    },
+    {
+      icon: <FaChartLine className="text-5xl text-red-600" />,
+      title: "Recurring Deposit",
+      description: "Build your savings systematically with our recurring deposit schemes.",
+      color: "#dc2626"
+    },
+    {
+      icon: <FaUserTie className="text-5xl text-red-600" />,
+      title: "Personal Loans",
+      description: "Quick and hassle-free personal loans to meet your immediate financial needs.",
+      color: "#b91c1c"
+    },
+    {
+      icon: <FaHandshake className="text-5xl text-red-600" />,
+      title: "Business Loans",
+      description: "Empower your business with our flexible business loan options.",
+      color: "#991b1b"
+    }
+  ];
+
+
+
   const products = [
     {
       icon: <FaPiggyBank className="text-6xl text-red-600" />,
@@ -140,6 +199,24 @@ const Products = () => {
     }
   ];
 
+
+    // Auto-slide for services carousel
+    useEffect(() => {
+      const timer = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % Math.max(1, services.length - 3));
+      }, 3000);
+      return () => clearInterval(timer);
+    }, [services.length]);
+  
+    const nextSlide = () => {
+      setCurrentSlide((prev) => (prev + 1) % Math.max(1, services.length - 3));
+    };
+  
+    const prevSlide = () => {
+      setCurrentSlide((prev) => (prev - 1 + Math.max(1, services.length - 3)) % Math.max(1, services.length - 3));
+    };
+  
+
   return (
     <div className="min-h-screen">
       {/* Enhanced Hero Section */}
@@ -241,6 +318,101 @@ const Products = () => {
           <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" >
             <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white" />
           </svg>
+        </div>
+      </section>
+
+
+          {/* Services Carousel Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <span className="text-red-600 font-semibold text-sm uppercase tracking-wider mb-4 block">
+              What We Offer
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+              Our Products & Services
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Comprehensive financial solutions designed to meet your diverse needs
+            </p>
+          </motion.div>
+
+          <div className="relative">
+            {/* Carousel Container */}
+            <div className="overflow-hidden">
+              <motion.div
+                animate={{ x: `-${currentSlide * 25}%` }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                className="flex gap-6"
+              >
+                {services.map((service, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    whileHover={{ y: -10, scale: 1.02 }}
+                    className="flex-shrink-0 w-full md:w-[calc(25%-18px)] bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-100"
+                    style={{ minWidth: 'calc(25% - 18px)' }}
+                  >
+                    <motion.div
+                      whileHover={{ rotate: 360, scale: 1.1 }}
+                      transition={{ duration: 0.6 }}
+                      className="mb-6"
+                    >
+                      {service.icon}
+                    </motion.div>
+
+                    <h3 className="text-2xl font-bold mb-4 text-gray-800">{service.title}</h3>
+                    <p className="text-gray-600 mb-6 leading-relaxed">{service.description}</p>
+
+                    <Link
+                      to="/products"
+                      className="inline-flex items-center gap-2 text-red-600 font-semibold hover:gap-4 transition-all duration-300"
+                    >
+                      Learn More
+                      <FaArrowRight />
+                    </Link>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
+
+            {/* Navigation Buttons */}
+            <div className="flex justify-center gap-4 mt-8">
+              <button
+                onClick={prevSlide}
+                className="w-12 h-12 bg-red-600 text-white rounded-full flex items-center justify-center hover:bg-red-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+              >
+                ←
+              </button>
+              <button
+                onClick={nextSlide}
+                className="w-12 h-12 bg-red-600 text-white rounded-full flex items-center justify-center hover:bg-red-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+              >
+                →
+              </button>
+            </div>
+
+            {/* Dots Indicator */}
+            <div className="flex justify-center gap-2 mt-6">
+              {[...Array(Math.max(1, services.length - 3))].map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`h-2 rounded-full transition-all duration-300 ${currentSlide === index ? 'w-8 bg-red-600' : 'w-2 bg-gray-300'
+                    }`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 

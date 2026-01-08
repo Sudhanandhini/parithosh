@@ -1,7 +1,41 @@
-import { motion } from 'framer-motion';
-import { FaEye, FaBullseye, FaHandshake, FaUsers, FaChartLine, FaShieldAlt, FaRocket, FaHeart, FaStar, FaTrophy } from 'react-icons/fa';
+import { motion, useInView } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { FaEye, FaFileAlt,FaBullseye, FaCheckCircle,FaUserCheck,  FaHandshake, FaUsers, FaChartLine, FaShieldAlt, FaRocket, FaHeart, FaStar, FaTrophy } from 'react-icons/fa';
+
+
+// Counter Hook
+const useCounter = (end, duration = 2000, shouldStart = false) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!shouldStart) return;
+
+    let startTime;
+    let animationFrame;
+
+    const animate = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+
+      setCount(Math.floor(progress * end));
+
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate);
+      }
+    };
+
+    animationFrame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrame);
+  }, [end, duration, shouldStart]);
+
+  return count;
+};
 
 const About = () => {
+  const statsRef = useRef(null);
+  const statsInView = useInView(statsRef, { once: true, amount: 0.5 });
+
+
   const fadeInUp = {
     initial: { opacity: 0, y: 30 },
     animate: { opacity: 1, y: 0 },
@@ -15,6 +49,13 @@ const About = () => {
       }
     }
   };
+
+  const stats = [
+    { value: 10000, suffix: "+", label: "Active Members", prefix: "" },
+    { value: 50, suffix: "Cr+", label: "Assets Under Management", prefix: "₹" },
+    { value: 15, suffix: "+", label: "Years of Service", prefix: "" },
+    { value: 98, suffix: "%", label: "Customer Satisfaction", prefix: "" }
+  ];
 
   const values = [
     {
@@ -77,6 +118,34 @@ const About = () => {
     { icon: <FaHeart />, value: "₹50Cr+", label: "Assets Managed" }
   ];
 
+
+   const processSteps = [
+      {
+        step: "01",
+        title: "Fill Application",
+        description: "Complete our simple online application form",
+        icon: <FaFileAlt />
+      },
+      {
+        step: "02",
+        title: "Submit Documents",
+        description: "Upload required documents securely",
+        icon: <FaCheckCircle />
+      },
+      {
+        step: "03",
+        title: "Quick Verification",
+        description: "Our team verifies your application",
+        icon: <FaUserCheck />
+      },
+      {
+        step: "04",
+        title: "Account Active",
+        description: "Start banking with us immediately",
+        icon: <FaRocket />
+      }
+    ];
+
   return (
     <div className="min-h-screen">
       {/* Enhanced Hero Section */}
@@ -134,10 +203,10 @@ const About = () => {
               className="inline-block mb-6"
             >
               <div className="w-20 h-20 mx-auto bg-white bg-opacity-20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                <FaUsers className="text-4xl text-black"  />
+                <FaUsers className="text-4xl text-black" />
               </div>
             </motion.div>
-            
+
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -146,7 +215,7 @@ const About = () => {
             >
               About Us
             </motion.h1>
-            
+
             <motion.p
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -175,36 +244,43 @@ const About = () => {
         {/* Wave Divider */}
         <div className="absolute bottom-0 left-0 w-full">
           <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" >
-            <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white"/>
+            <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white" />
           </svg>
         </div>
       </section>
 
-      {/* Achievements Section */}
-      <section className="py-16 -mt-20 relative z-10">
+
+
+      {/* Stats Section with Counter Animation */}
+      <section ref={statsRef} className="py-20 bg-white">
         <div className="container mx-auto px-4">
-          <motion.div
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6"
-          >
-            {achievements.map((item, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-                whileHover={{ scale: 1.05, y: -5 }}
-                className="bg-white p-6 rounded-2xl shadow-xl text-center"
-              >
-                <div className="text-4xl text-red-600 mb-3 flex justify-center">
-                  {item.icon}
-                </div>
-                <div className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">{item.value}</div>
-                <div className="text-gray-600 font-medium">{item.label}</div>
-              </motion.div>
-            ))}
-          </motion.div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {stats.map((stat, index) => {
+              const count = useCounter(stat.value, 2500, statsInView);
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.15, duration: 0.5 }}
+                  viewport={{ once: true }}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  className="text-center"
+                >
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    transition={{ delay: index * 0.15 + 0.3, type: "spring", stiffness: 200 }}
+                    viewport={{ once: true }}
+                    className="text-5xl md:text-6xl font-bold text-red-600 mb-3"
+                  >
+                    {stat.prefix}{statsInView ? count : 0}{stat.suffix}
+                  </motion.div>
+                  <div className="text-gray-700 font-medium text-lg">{stat.label}</div>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
@@ -226,22 +302,22 @@ const About = () => {
               >
                 Our Story
               </motion.span>
-              
+
               <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
                 Who We Are
               </h2>
-              
+
               <p className="text-gray-600 mb-4 text-lg leading-relaxed">
-               Parithosh Souharda Credit Co-operative Ltd is a member-centric financial co-operative institution established with the objective of promoting financial inclusion, savings culture, and self-reliance among its members. Registered under the Karnataka Souharda Sahakari Act, the society functions on the principles of co-operation, transparency, trust, and mutual growth.
+                Parithosh Souharda Credit Co-operative Ltd is a member-centric financial co-operative institution established with the objective of promoting financial inclusion, savings culture, and self-reliance among its members. Registered under the Karnataka Souharda Sahakari Act, the society functions on the principles of co-operation, transparency, trust, and mutual growth.
 
 
 
-            </p>
-              
-              <p className="text-gray-600 mb-4 text-lg leading-relaxed">
-               We provide reliable and accessible financial services such as savings schemes, group loans, personal loans, and business loans to meet the diverse needs of our members. Our focus is on empowering individuals, self-help groups, small entrepreneurs, and families by offering timely credit support at reasonable terms.
               </p>
-              
+
+              <p className="text-gray-600 mb-4 text-lg leading-relaxed">
+                We provide reliable and accessible financial services such as savings schemes, group loans, personal loans, and business loans to meet the diverse needs of our members. Our focus is on empowering individuals, self-help groups, small entrepreneurs, and families by offering timely credit support at reasonable terms.
+              </p>
+
               <p className="text-gray-600 mb-6 text-lg leading-relaxed">
                 At Parithosh Souharda Credit Co-operative Ltd, we believe that sustainable financial growth is possible only when every member progresses together. With strong governance, ethical practices, and a customer-friendly approach, we strive to build a financially secure and socially responsible community.
               </p>
@@ -278,15 +354,15 @@ const About = () => {
                 >
                   <FaUsers />
                 </motion.div>
-                
+
                 <h3 className="text-3xl font-bold mb-4">Serving Citizens of Karnataka</h3>
-                
+
                 <p className="opacity-90 mb-6 text-lg">
-              A cooperative society registered under the Karnataka Souharda Sahakari Act, 1997.
-Dedicated to customer-centric financial services.
-Supporting the economic growth of Karnataka’s citizens.
+                  A cooperative society registered under the Karnataka Souharda Sahakari Act, 1997.
+                  Dedicated to customer-centric financial services.
+                  Supporting the economic growth of Karnataka’s citizens.
                 </p>
-                
+
                 <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6">
                   <div className="text-5xl font-bold mb-2 text-black">10,000+</div>
                   <div className="text-lg opacity-90 text-black">Satisfied Members</div>
@@ -297,8 +373,77 @@ Supporting the economic growth of Karnataka’s citizens.
         </div>
       </section>
 
-      {/* Vision & Mission Section */}
+       {/* Process Section */}
       <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <span className="text-red-600 font-semibold text-sm uppercase tracking-wider mb-4 block">
+              How It Works
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+              Fast & Easy Application Process
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Get started with your account in just four simple steps
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+            {processSteps.map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.15, duration: 0.6 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -10, scale: 1.05 }}
+                className="text-center relative"
+              >
+                {/* Connecting Line */}
+                {index < processSteps.length - 1 && (
+                  <div className="hidden md:block absolute top-16 left-[60%] w-[80%] h-0.5 bg-red-200 z-0" />
+                )}
+
+                {/* Step Circle */}
+                <motion.div
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  transition={{ delay: index * 0.15 + 0.3, type: "spring", stiffness: 200 }}
+                  viewport={{ once: true }}
+                  className="relative z-10"
+                >
+                  <div className="w-32 h-32 mx-auto mb-6 rounded-full flex items-center justify-center bg-gradient-to-br from-red-100 to-red-50 shadow-lg">
+                    <div className="text-5xl font-bold text-red-600">{item.step}</div>
+                  </div>
+                </motion.div>
+
+                {/* Icon */}
+                <motion.div
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  transition={{ delay: index * 0.15 + 0.5, type: "spring" }}
+                  viewport={{ once: true }}
+                  className="w-16 h-16 mx-auto mb-4 bg-white rounded-2xl flex items-center justify-center shadow-lg"
+                >
+                  <div className="text-3xl text-red-600">{item.icon}</div>
+                </motion.div>
+
+                <h3 className="text-xl font-bold mb-3 text-gray-800">{item.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{item.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Vision & Mission Section */}
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -325,14 +470,14 @@ Supporting the economic growth of Karnataka’s citizens.
               className="bg-white p-8 rounded-2xl shadow-xl relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-red-50 rounded-full -mr-16 -mt-16" />
-              
+
               <div className="relative">
                 <div className="w-20 h-20 bg-red-100 rounded-2xl flex items-center justify-center mb-6">
                   <FaEye className="text-4xl text-red-600" />
                 </div>
-                
+
                 <h2 className="text-3xl font-bold text-gray-800 mb-4">Our Vision</h2>
-                
+
                 <p className="text-gray-600 text-lg leading-relaxed">
                   To become a leading co-operative financial institution that empowers every member with accessible, reliable, and sustainable financial solutions, fostering a community of financial independence and collective prosperity.
                 </p>
@@ -348,14 +493,14 @@ Supporting the economic growth of Karnataka’s citizens.
               className="bg-white p-8 rounded-2xl shadow-xl relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-red-50 rounded-full -mr-16 -mt-16" />
-              
+
               <div className="relative">
                 <div className="w-20 h-20 bg-red-100 rounded-2xl flex items-center justify-center mb-6">
                   <FaBullseye className="text-4xl text-red-600" />
                 </div>
-                
+
                 <h2 className="text-3xl font-bold text-gray-800 mb-4">Our Mission</h2>
-                
+
                 <p className="text-gray-600 text-lg leading-relaxed">
                   To provide member-centric financial services with transparency, trust, and integrity while promoting savings habits, offering timely credit support, and contributing to the social and economic development of our community.
                 </p>
@@ -365,74 +510,7 @@ Supporting the economic growth of Karnataka’s citizens.
         </div>
       </section>
 
-      {/* Purpose Section - Redesigned */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <span className="text-red-600 font-semibold text-sm uppercase tracking-wider mb-4 block">
-              HOW IT WORKS
-            </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
-              Fast & Easy Application Process
-            </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Get started with your account in just four simple steps. Our streamlined process ensures quick verification and activation.
-            </p>
-          </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-            {purposes.map((purpose, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1, duration: 0.6 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -10, scale: 1.02 }}
-                className="relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100"
-              >
-                {/* Step Number with Outline */}
-                <div className="mb-6">
-                  <span className="text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-red-600 to-red-800" style={{ 
-                    WebkitTextStroke: '2px #dc2626',
-                    WebkitTextFillColor: 'transparent'
-                  }}>
-                    {purpose.step}
-                  </span>
-                </div>
-
-                {/* Icon */}
-                <div className="w-16 h-16 bg-red-100 rounded-xl flex items-center justify-center mb-6">
-                  <div className="text-3xl text-red-600">
-                    {purpose.icon}
-                  </div>
-                </div>
-
-                {/* Title */}
-                <h3 className="text-xl font-bold text-gray-800 mb-4">
-                  {purpose.title}
-                </h3>
-
-                {/* Description */}
-                <p className="text-gray-600 leading-relaxed">
-                  {purpose.description}
-                </p>
-
-                {/* Connecting Line (except last item) */}
-                {index < purposes.length - 1 && (
-                  <div className="hidden lg:block absolute top-16 -right-4 w-8 h-0.5 bg-red-200" />
-                )}
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Values Section */}
       <section className="py-20 bg-gray-50">
@@ -476,7 +554,7 @@ Supporting the economic growth of Karnataka’s citizens.
                     {value.icon}
                   </div>
                 </motion.div>
-                
+
                 <h3 className="text-xl font-bold text-gray-800 mb-3">{value.title}</h3>
                 <p className="text-gray-600">{value.description}</p>
               </motion.div>
@@ -532,11 +610,11 @@ Supporting the economic growth of Karnataka’s citizens.
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               Join Our Growing Community
             </h2>
-            
+
             <p className="text-xl mb-10 opacity-95">
               Be part of a financial institution that truly cares about your growth and prosperity. Start your journey with us today!
             </p>
-            
+
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
