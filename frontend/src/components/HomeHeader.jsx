@@ -208,7 +208,7 @@ const HomeHeader = () => {
               transition={{ delay: 0.2 }}
               className="text-white/90 text-sm md:text-base mb-4 tracking-wide"
             >
-              Simple & Secure Online Banking
+              Smart Banking Solutions for a Digital World
             </motion.p>
 
             <motion.h1
@@ -253,9 +253,9 @@ const HomeHeader = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="text-white/80 text-base md:text-lg mb-8 leading-relaxed italic"
+              className="text-red-700 text-base md:text-lg mb-8 leading-relaxed italic"
             >
-              Cras phasellus faucibus provident occaecat praesentium, iusto nunc cursus! Ac morbi architecto tincidunt curabitur, porta orci mi doning.
+              Experience seamless online banking with advanced security, instant access, and tools designed to simplify your financial life.
             </motion.p>
 
             <motion.div

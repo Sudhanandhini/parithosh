@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock, FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram, FaPaperPlane, FaCheckCircle } from 'react-icons/fa';
+import ScrollToTop from '../components/ScrollToTop';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +14,7 @@ const Contact = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState({ type: '', message: '' });
 
   const handleChange = (e) => {
     setFormData({
@@ -20,14 +23,36 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitStatus({ type: '', message: '' });
 
-    // Simulate form submission
-    setTimeout(() => {
-      console.log('Form submitted:', formData);
-      alert('Thank you for your message! We will get back to you soon.');
+    try {
+      // EmailJS configuration
+      const serviceID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_xxxxxxx';
+      const templateID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_xxxxxxx';
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'your_public_key';
+
+      // Template parameters to send to support@sunsys.in
+      const templateParams = {
+        to_email: 'support@sunsys.in',
+        from_name: formData.name,
+        from_email: formData.email,
+        phone: formData.phone,
+        subject: formData.subject,
+        message: formData.message,
+        reply_to: formData.email
+      };
+
+      await emailjs.send(serviceID, templateID, templateParams, publicKey);
+
+      setSubmitStatus({
+        type: 'success',
+        message: 'Thank you for your message! We will get back to you soon.'
+      });
+
+      // Reset form
       setFormData({
         name: '',
         email: '',
@@ -35,8 +60,21 @@ const Contact = () => {
         subject: '',
         message: ''
       });
+
+      // Clear success message after 5 seconds
+      setTimeout(() => {
+        setSubmitStatus({ type: '', message: '' });
+      }, 5000);
+
+    } catch (error) {
+      console.error('Error sending email:', error);
+      setSubmitStatus({
+        type: 'error',
+        message: 'Failed to send message. Please try again or contact us directly at support@sunsys.in'
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
 
   const contactInfo = [
@@ -387,6 +425,26 @@ const Contact = () => {
                       </>
                     )}
                   </motion.button>
+
+                  {/* Status Message */}
+                  {submitStatus.message && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className={`p-4 rounded-xl flex items-center gap-3 ${
+                        submitStatus.type === 'success'
+                          ? 'bg-green-100 text-green-800 border border-green-300'
+                          : 'bg-red-100 text-red-800 border border-red-300'
+                      }`}
+                    >
+                      {submitStatus.type === 'success' ? (
+                        <FaCheckCircle className="text-xl" />
+                      ) : (
+                        <FaEnvelope className="text-xl" />
+                      )}
+                      <p className="font-medium">{submitStatus.message}</p>
+                    </motion.div>
+                  )}
                 </form>
               </div>
             </motion.div>
@@ -614,6 +672,9 @@ const Contact = () => {
           </motion.div>
         </div>
       </section>
+
+
+        <ScrollToTop />
     </div>
   );
 };

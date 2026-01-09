@@ -9,6 +9,8 @@ import bgPattern from '../assets/images/back.png';
 import { FaAward, FaUser, FaBriefcase, FaHome } from 'react-icons/fa';
 import { FaChevronLeft, FaChevronRight, FaStar, FaQuoteLeft, FaPlus, FaMinus } from 'react-icons/fa';
 
+import ScrollToTop from '../components/ScrollToTop';
+
 // Import your images
 import logo1 from '../assets/images/back.png';
 import businessPerson from '../assets/images/hero.png';
@@ -219,7 +221,7 @@ const Home = () => {
     {
       icon: <FaPiggyBank className="text-5xl" />,
       title: "Savings Account",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmo",
+      description: "Secure your future with our high-interest savings accounts designed for your financial growth.",
       bgColor: "bg-red-700",
       hoverBgColor: "hover:bg-red-800",
       textColor: "text-white",
@@ -229,7 +231,7 @@ const Home = () => {
     {
       icon: <FaPercentage className="text-5xl" />,
       title: "Low Interest Rate",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmo",
+      description: "Benefit from our competitive low-interest rates tailored to meet your financial needs.",
       bgColor: "bg-white",
       hoverBgColor: "hover:bg-gray-50",
       textColor: "text-gray-900",
@@ -239,7 +241,7 @@ const Home = () => {
     {
       icon: <FaShieldAlt className="text-5xl" />,
       title: "Strong Security System",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmo",
+      description: "Protect your assets with our advanced security measures and fraud detection systems.",
       bgColor: "bg-white",
       hoverBgColor: "hover:bg-gray-50",
       textColor: "text-gray-900",
@@ -249,7 +251,7 @@ const Home = () => {
     {
       icon: <FaCreditCard className="text-5xl" />,
       title: "Multiple Cards",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmo",
+      description: "Choose from a variety of credit and debit cards tailored to your lifestyle and spending habits.",
       bgColor: "bg-white",
       hoverBgColor: "hover:bg-gray-50",
       textColor: "text-gray-900",
@@ -259,8 +261,8 @@ const Home = () => {
   ];
 
   const progressBars = [
-    { label: 'INVESTMENT PLANS', percentage: 85 },
-    { label: 'CONSULTING EXPERIENCE', percentage: 92 }
+    { label: 'INVESTMENT PLANS', percentage: 85 , para:"Well-structured investment options designed to deliver consistent returns while balancing risk and long-term growth."},
+    { label: 'CONSULTING EXPERIENCE', percentage: 92, para:"Expert financial guidance backed by years of industry experience, helping clients make confident and informed decisions" }
   ];
 
   const features = [
@@ -277,53 +279,28 @@ const Home = () => {
 
 
 
-  const processSteps = [
-    {
-      step: "01",
-      title: "Fill Application",
-      description: "Complete our simple online application form",
-      icon: <FaFileAlt />
-    },
-    {
-      step: "02",
-      title: "Submit Documents",
-      description: "Upload required documents securely",
-      icon: <FaCheckCircle />
-    },
-    {
-      step: "03",
-      title: "Quick Verification",
-      description: "Our team verifies your application",
-      icon: <FaUserCheck />
-    },
-    {
-      step: "04",
-      title: "Account Active",
-      description: "Start banking with us immediately",
-      icon: <FaRocket />
-    }
-  ];
+  
 
   const steps = [
     {
       number: '01',
       title: 'Consult With Team',
-      description: 'Phasellus venenatis turpis eget nulla porttitor varius'
+      description: 'Speak with our experts to understand the best banking or financial solution for your needs. We guide you at every step with clear and honest advice.'
     },
     {
       number: '02',
       title: 'Provide Your Document',
-      description: 'Phasellus venenatis turpis eget nulla porttitor varius'
+      description: 'Submit the required documents securely online. Our system ensures safe data handling and fast processing with minimal effort.'
     },
     {
       number: '03',
       title: 'Bank Verification Process',
-      description: 'Phasellus venenatis turpis eget nulla porttitor varius'
+      description: 'We verify your details using advanced security checks to ensure compliance, accuracy, and complete protection of your information.'
     },
     {
       number: '04',
       title: 'Start Using Account',
-      description: 'Phasellus venenatis turpis eget nulla porttitor varius'
+      description: 'Once approved, access your account instantly. Manage transactions, track finances, and enjoy full banking features right away.'
     }
   ];
 
@@ -331,25 +308,25 @@ const Home = () => {
     {
       icon: <FaAward className="text-5xl" />,
       title: 'Education Loan',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmo',
+      description: 'Invest in your future with flexible education loans designed to support tuition, living expenses, and career growth—at competitive interest rates.',
       link: '/products'
     },
     {
       icon: <FaUser className="text-5xl" />,
       title: 'Personal Loan',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmo',
+      description: 'Handle life’s unexpected needs with quick personal loans offering fast approval, minimal documentation, and flexible repayment options.',
       link: '/products'
     },
     {
       icon: <FaBriefcase className="text-5xl" />,  // Changed here
       title: 'Business Loan',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmo',
+      description: 'Fuel your business growth with tailored financing solutions to manage operations, expand services, or invest in new opportunities.',
       link: '/products'
     },
     {
       icon: <FaHome className="text-5xl" />,
       title: 'Mortgage Loans',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmo',
+      description: 'Turn your dream home into reality with affordable mortgage plans, transparent terms, and long-term repayment flexibility.',
       link: '/products'
     }
   ];
@@ -571,7 +548,7 @@ const Home = () => {
                 Our Featured Products.
               </h2>
               <p className="text-gray-600 mb-8 text-lg leading-relaxed">
-                Proin ullamcorper pretium orci. Donec nec scelerisque leo. Nam massa dolor, imperdiet.
+               Discover a range of banking solutions designed to help you save smarter, spend confidently, and secure your financial future. Our products are built with flexibility, security, and convenience in mind.
               </p>
               <Link
                 to="/products"
@@ -775,6 +752,15 @@ const Home = () => {
                       </span>
                     </div>
 
+
+                    <div>
+                       <p className="text-white mb-6 leading-relaxed">
+              {bar.para}
+              </p>             
+
+                    </div>
+
+
                     {/* Progress Bar */}
                     <div className="w-full bg-gray-700 rounded-full h-2 overflow-hidden">
                       <motion.div
@@ -790,12 +776,10 @@ const Home = () => {
               </div>
 
               {/* Description Text */}
-              <p className="text-gray-300 mb-6 leading-relaxed">
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              <p className="text-white mb-6 leading-relaxed">
+                We combine technology, expertise, and customer-first thinking to offer financial services that are transparent, efficient, and tailored to real-world needs. Our solutions are built to simplify money management while maximizing value.
               </p>
-              <p className="text-white font-semibold mb-10 leading-relaxed">
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore inceptos per consectetur consequatur proin
-              </p>
+             
 
               {/* Features List */}
               <div className="space-y-6 mb-10">
@@ -844,7 +828,7 @@ const Home = () => {
                 className="mb-8"
               >
                 <p className="text-gray-300 leading-relaxed mb-6">
-                  Inceptos per consectetur consequatur proin.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temp.
+                 We deliver smart, reliable financial solutions that help individuals and businesses plan better, grow faster, and stay secure in a rapidly changing digital world.
                 </p>
                 <Link
                   to="/about"
@@ -964,7 +948,7 @@ const Home = () => {
               Fast & Easy Application Process Here
             </h2>
             <p className="text-gray-600 text-lg leading-relaxed">
-              Inceptos per consectetur consequatur proin.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temp.
+             Apply for your account in just a few simple steps. Our streamlined process ensures quick verification, minimal paperwork, and instant access to modern banking services.
             </p>
           </motion.div>
 
@@ -1119,7 +1103,7 @@ const Home = () => {
                 Experience financial growth with us
               </h2>
               <p className="text-gray-200 mb-12 leading-relaxed text-lg">
-                Cras phasellus faucibus provident occaecat praesentium, iusto nunc cursus! Ac morbi architecto tincidunt curabitur, porta orci mi doning.
+               Thousands of individuals and families trust us to manage their finances with care, transparency, and smart digital solutions. Here’s what our customers have to say about their experience.
               </p>
 
               {/* Testimonial Slider */}
@@ -1347,7 +1331,7 @@ const Home = () => {
                 Trusted By More Than 75 Global Companies Have Worked With Us
               </h2>
               <p className="text-gray-600 text-lg leading-relaxed max-w-4xl mx-auto">
-                Lorem ipsum dolor consectetur adipiscing tempor incididunt labore dolore magna aliqua. Sed augue lacus viverra vitae congue consequat felis.
+               We proudly collaborate with trusted organizations across industries, delivering reliable financial solutions that support growth, stability, and long-term partnerships worldwide.
               </p>
             </motion.div>
 
@@ -1475,7 +1459,7 @@ const Home = () => {
                   Frequently Asked Questions
                 </h2>
                 <p className="text-gray-600 mb-8 text-lg leading-relaxed">
-                  Proin ullamcorper pretium orci. Donec nec scelerisque leo. Nam massa dolor, imperdiet.
+                  Find quick answers to the most common questions about our services, security, and digital banking features.
                 </p>
                 <Link
                   to="/contact"
@@ -1571,6 +1555,8 @@ const Home = () => {
           </motion.div>
         </div>
       </section>
+
+      <ScrollToTop />
     </div>
   );
 };

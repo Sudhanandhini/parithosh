@@ -1,7 +1,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
 import { FaEye, FaFileAlt,FaBullseye, FaCheckCircle,FaUserCheck,  FaHandshake, FaUsers, FaChartLine, FaShieldAlt, FaRocket, FaHeart, FaStar, FaTrophy } from 'react-icons/fa';
-
+import ScrollToTop from '../components/ScrollToTop';
 
 // Counter Hook
 const useCounter = (end, duration = 2000, shouldStart = false) => {
@@ -632,6 +632,8 @@ const About = () => {
           </motion.div>
         </div>
       </section>
+
+        <ScrollToTop />
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { FaPiggyBank, FaCreditCard, FaMoneyBillWave, FaChartLine, FaUserTie, FaH
 import { motion, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
-
+import ScrollToTop from '../components/ScrollToTop';
 
 
 
@@ -686,6 +686,10 @@ const Products = () => {
           </motion.div>
         </div>
       </section>
+
+
+
+        <ScrollToTop />
     </div>
   );
 };

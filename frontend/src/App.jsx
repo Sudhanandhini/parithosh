@@ -7,6 +7,7 @@ import About from './pages/About';
 import Products from './pages/Products';
 import Contact from './pages/Contact';
 import './index.css';
+import ScrollToTop from './components/ScrollToTop';
 
 function AppContent() {
   const location = useLocation();
@@ -24,6 +25,7 @@ function AppContent() {
         </Routes>
       </main>
       <Footer />
+        <ScrollToTop />
     </div>
   );
 }
