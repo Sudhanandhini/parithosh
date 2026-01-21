@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import { FaPercentage, FaShieldAlt, FaPiggyBank, FaCreditCard, FaCheckCircle, FaFileAlt, FaUserCheck, FaRocket, } from 'react-icons/fa';
 import aboutImage from "../assets/images/hero.png"
+// import heroImage2 from "../assets/images/home/hero2.webp"
+import whyChoose from "../assets/images/home/bg-2.jpg"
 import profileImage from "../assets/images/back.png"
-import whyChooseImage from '../assets/images/hero.png'; // Replace with your business person image
+import whyChooseImage from '../assets/images/home/hero3.webp'; // Replace with your business person image
 import bgPattern from '../assets/images/back.png';
 import { FaAward, FaUser, FaBriefcase, FaHome } from 'react-icons/fa';
 import { FaChevronLeft, FaChevronRight, FaStar, FaQuoteLeft, FaPlus, FaMinus } from 'react-icons/fa';
@@ -12,8 +14,8 @@ import { FaChevronLeft, FaChevronRight, FaStar, FaQuoteLeft, FaPlus, FaMinus } f
 import ScrollToTop from '../components/ScrollToTop';
 
 // Import your images
-import logo1 from '../assets/images/back.png';
-import businessPerson from '../assets/images/hero.png';
+import logo1 from '../assets/images/back.webp';
+import businessPerson from '../assets/images/home/hero2.webp';
 
 
 
@@ -470,10 +472,12 @@ const Home = () => {
               </div>
 
               {/* Discover More Button */}
-              <button className="bg-red-700 hover:bg-red-800 text-white px-8 py-3.5 rounded-lg font-semibold transition-all duration-300 flex items-center gap-2 group">
-                DISCOVER MORE
-                <span className="group-hover:translate-x-1 transition-transform">→</span>
-              </button>
+              <Link to="/about">
+                <button className="bg-red-700 hover:bg-red-800 text-white px-8 py-3.5 rounded-lg font-semibold transition-all duration-300 flex items-center gap-2 group">
+                  DISCOVER MORE
+                  <span className="group-hover:translate-x-1 transition-transform">→</span>
+                </button>
+              </Link>
             </motion.div>
 
             {/* Right Stats Section */}
@@ -709,7 +713,7 @@ const Home = () => {
       {/* 4th Section with Stats */}
       <section className="py-20 relative overflow-hidden bg-fixed"
         style={{
-          backgroundImage: `linear-gradient(rgba(17, 24, 39, 0.25), rgba(17, 24, 39, 0.15)), url(${bgPattern})`,
+          backgroundImage: `linear-gradient(rgba(17, 24, 39, 0.25), rgba(17, 24, 39, 0.15)), url(${whyChoose})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed'
@@ -747,7 +751,7 @@ const Home = () => {
                       <span className="text-white font-semibold text-sm tracking-wide">
                         {bar.label}
                       </span>
-                      <span className="text-red-400 font-bold text-sm bg-red-900 px-3 py-1 rounded-full">
+                      <span className="text-white font-bold text-sm bg-red-900 px-3 py-1 rounded-full">
                         {bar.percentage}%
                       </span>
                     </div>
@@ -790,7 +794,7 @@ const Home = () => {
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 + 0.4, duration: 0.6 }}
                     viewport={{ once: true }}
-                    className="flex items-start gap-4 pb-6 border-b border-dashed border-gray-700 last:border-0"
+                    className="flex items-start gap-4 pb-6 border-b border-dashed border-white last:border-0"
                   >
                     {/* Check Icon */}
                     <div className="flex-shrink-0 w-12 h-12 bg-red-600 rounded-full flex items-center justify-center">
@@ -802,7 +806,7 @@ const Home = () => {
                       <h4 className="text-white font-bold text-lg mb-1">
                         {feature.title}
                       </h4>
-                      <p className="text-black text-sm">
+                      <p className="text-white text-sm">
                         {feature.description}
                       </p>
                     </div>
@@ -1198,10 +1202,10 @@ const Home = () => {
                 <motion.div
                   initial={{ opacity: 0, scale: 0 }}
                   whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.5, type: 'spring' }}
+                  transition={{ delay: 0.5, type: 'spring', duration: 3, repeat: Infinity }}
                   viewport={{ once: true }}
                   animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 3, repeat: Infinity }}
+             
                   className="absolute top-12 left-8 bg-white rounded-2xl p-4 shadow-2xl"
                 >
                   <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
@@ -1215,10 +1219,10 @@ const Home = () => {
                 <motion.div
                   initial={{ opacity: 0, scale: 0 }}
                   whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.7, type: 'spring' }}
+                  transition={{ delay: 0.7, type: 'spring', duration: 4, repeat: Infinity  }}
                   viewport={{ once: true }}
                   animate={{ y: [0, 10, 0] }}
-                  transition={{ duration: 4, repeat: Infinity }}
+               
                   className="absolute top-16 right-8 bg-white rounded-2xl p-4 shadow-2xl"
                 >
                   <p className="text-red-600 font-semibold text-xs mb-2">Data</p>
@@ -1234,11 +1238,11 @@ const Home = () => {
                 <motion.div
                   initial={{ opacity: 0, scale: 0 }}
                   whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.9, type: 'spring' }}
+                  transition={{ delay: 0.9, type: 'spring', duration: 3.5, repeat: Infinity }}
                   viewport={{ once: true }}
                   animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 3.5, repeat: Infinity }}
-                  className="absolute bottom-32 left-8 bg-white rounded-2xl p-4 shadow-2xl"
+                 
+                  className="absolute bottom-2 left-8 bg-white rounded-2xl p-4 shadow-2xl"
                 >
                   <div className="flex items-end gap-1 h-16">
                     <div className="w-4 bg-yellow-400 rounded-t" style={{ height: '50%' }}></div>
@@ -1249,7 +1253,7 @@ const Home = () => {
                 </motion.div>
 
                 {/* Bottom Center - Rating Card */}
-                <motion.div
+                {/* <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: 1.1, type: 'spring' }}
@@ -1271,7 +1275,7 @@ const Home = () => {
                       ))}
                     </div>
                   </div>
-                </motion.div>
+                </motion.div> */}
               </div>
             </motion.div>
           </div>
@@ -1312,7 +1316,7 @@ const Home = () => {
 
 
       {/* 8th faq Section with Stats */}
-      <div className="bg-gray-50">
+      <div className="bg-gray-50 ">
         {/* Partners Section */}
         <section className="py-20">
           <div className="container mx-auto px-4">

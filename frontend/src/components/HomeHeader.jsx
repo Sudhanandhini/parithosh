@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaBars, FaTimes, FaFacebookF, FaTwitter, FaGooglePlusG, FaInstagram, FaEnvelope, FaPhone, FaSearch, FaChevronDown } from 'react-icons/fa';
-import hero from "../assets/images/hero.png";
-import back from "../assets/images/back.png";
-import logo from "../assets/images/logo.jpg"
+import hero from "../assets/images/home/hero1.webp";
+import back from "../assets/images/back.webp";
+import logo from "../assets/images/logo.webp"
 
 const HomeHeader = () => {
 
@@ -112,13 +112,13 @@ const HomeHeader = () => {
             <Link to="/" className="text-3xl md:text-4xl font-bold text-white flex items-center gap-2">
               <div className="flex items-center">
                 <div className=" flex items-center justify-center">
-                  <img src={logo} alt="Parithosh Souharda Logo" className="w-20 h-20 rounded-full" />
+                  <img src={logo} alt="Parithosh Souharda Logo" className="w-30 h-30 rounded-full" />
                 </div>
                 <div className="ml-3">
-                  <h1 className="text-xl md:text-2xl font-bold text-white leading-tight">
+                  <h1 className="text-xl md:text-4xl font-bold text-white leading-tight">
                     Parithosh Souharda
                   </h1>
-                  <p className="text-xs text-white">Credit Co-operative Ltd</p>
+                  <p className="text-xl text-white">Credit Co-operative Ltd</p>
                 </div>
               </div>
             </Link>
@@ -253,7 +253,7 @@ const HomeHeader = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="text-red-700 text-base md:text-lg mb-8 leading-relaxed italic"
+              className="text-white text-base md:text-lg mb-8 leading-relaxed italic"
             >
               Experience seamless online banking with advanced security, instant access, and tools designed to simplify your financial life.
             </motion.p>
@@ -263,10 +263,12 @@ const HomeHeader = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
             >
+              <Link to="/about">
               <button className="border-2 border-white text-white px-8 py-3 rounded-full font-medium hover:bg-white hover:text-[#4a6741] transition-all duration-300 flex items-center gap-2">
                 LEARN MORE
                 <span>→</span>
               </button>
+              </Link>
             </motion.div>
           </motion.div>
 
@@ -281,7 +283,7 @@ const HomeHeader = () => {
             <div className="absolute w-[300px] h-[300px] md:w-[400px] md:h-[400px] lg:w-[500px] lg:h-[500px] rounded-full border-4 border-white/20"></div>
 
             {/* Main Image Container */}
-            <div className="relative z-10">
+            <div className="relative z-10 animate__animated animate__fadeInUp">
               <img
                 src={hero}
                 alt="Banking Professional"
